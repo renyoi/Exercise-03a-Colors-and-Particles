@@ -3,6 +3,10 @@ extends ColorRect
 onready var HUD = get_node("/root/Game/HUD")
 var c = 0
 var colors = [
+	Color8(0,0,0),
+	Color8(33,38,41),
+	Color8(52,59,63),
+	Color8(33,38,41)
 ]
 
 func _ready():
@@ -19,4 +23,7 @@ func _on_Timer_timeout():
 
 
 func update_color():
-	pass
+	if HUD.color_background:
+		color = colors[c]
+	else:
+		color = Color(0,0,0,1)

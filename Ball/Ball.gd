@@ -4,7 +4,7 @@ export var max_speed = 400.0
 export var min_speed = 100.0
 onready var HUD = get_node("/root/Game/HUD")
 
-var color = Color(1,1,1,1)
+var color = Color8(35,184,207)
 
 func _ready():
 	HUD.connect("changed",self,"_on_HUD_changed")
@@ -36,3 +36,7 @@ func update_color():
 		$Color.color = color
 	else:
 		$Color.color = Color(1,1,1,1)
+	if HUD.particle_ball:
+		$Particles2D.emitting = true
+	else:
+		$Particles2D.emitting = false

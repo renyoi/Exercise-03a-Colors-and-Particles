@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Paddle/Paddle.gd" type="Script" id=1]
 [ext_resource path="res://Ball/Ball_Container.gd" type="Script" id=2]
@@ -6,10 +6,79 @@
 [ext_resource path="res://HUD/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Walls/Walls.gd" type="Script" id=5]
 [ext_resource path="res://Background/Background.gd" type="Script" id=6]
+[ext_resource path="res://Assets/bubble.png" type="Texture" id=7]
+[ext_resource path="res://Assets/confetti.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Datalegreya-Thin.otf" type="DynamicFontData" id=16]
+
+[sub_resource type="GradientTexture" id=3]
+
+[sub_resource type="Curve" id=4]
+min_value = -1.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+flag_disable_z = true
+spread = 75.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 200.0
+initial_velocity_random = 0.5
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 300.0
+linear_accel_random = 1.0
+radial_accel = 100.0
+radial_accel_random = 1.0
+scale = 0.25
+scale_random = 0.25
+scale_curve = SubResource( 7 )
+color_ramp = SubResource( 3 )
+hue_variation = 0.1
+hue_variation_random = 0.5
+hue_variation_curve = SubResource( 5 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 50, 10 )
+
+[sub_resource type="Curve" id=9]
+min_value = -360.0
+max_value = 360.0
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="Curve" id=11]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+flag_disable_z = true
+spread = 60.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 450.0
+initial_velocity_random = 0.75
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle_random = 0.5
+angle_curve = SubResource( 10 )
+scale = 0.5
+scale_random = 0.5
+scale_curve = SubResource( 12 )
+hue_variation = 0.7
+hue_variation_random = 0.25
 
 [sub_resource type="DynamicFont" id=2]
 size = 36
@@ -38,6 +107,13 @@ script = ExtResource( 5 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Walls"]
 polygon = PoolVector2Array( 0, 0, 0, 768, 1024, 768, 1024, 0, 64, 0, 64, -64, 1088, -64, 1088, 832, -64, 832, -64, -64, 64, -64, 64, 0 )
 
+[node name="Particles2D" type="Particles2D" parent="Walls"]
+emitting = false
+lifetime = 0.4
+one_shot = true
+process_material = SubResource( 8 )
+texture = ExtResource( 7 )
+
 [node name="Bricks" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
@@ -58,6 +134,14 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle_Container/Paddle"]
 position = Vector2( 0, 10 )
 shape = SubResource( 1 )
+
+[node name="Particles2D" type="Particles2D" parent="Paddle_Container/Paddle"]
+emitting = false
+amount = 6
+lifetime = 0.4
+one_shot = true
+process_material = SubResource( 13 )
+texture = ExtResource( 8 )
 
 [node name="Ball_Container" type="Node2D" parent="."]
 script = ExtResource( 2 )
